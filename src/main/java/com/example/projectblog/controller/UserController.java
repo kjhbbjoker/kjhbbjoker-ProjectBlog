@@ -43,12 +43,14 @@ public class UserController {
 
     // 회원 가입 요청 처리
     @PostMapping("/user/signup")
-    public String registerUser(@Valid @ModelAttribute SignDto requestDto, BindingResult bindingResult) {
-        System.out.println(requestDto);
+    public String registerUser(Model model, @Valid @ModelAttribute SignDto requestDto, BindingResult bindingResult) {
 
-      /* if(bindingResult.hasErrors()){
-            return "signup";
-        }*/
+
+
+    if(bindingResult.hasErrors()){
+        System.out.println(requestDto);
+            return "signup"; //에러 메시지를 줘야 하는데 어떻게 객체를 전달해야되는지 몰라서 일단...잘못되면 회원가입 창 리턴 받게 작성했습니다.
+        }
         userService.registerUser(requestDto, bindingResult); //dto변환
         return "login";
 

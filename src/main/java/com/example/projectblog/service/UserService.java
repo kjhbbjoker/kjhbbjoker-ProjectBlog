@@ -31,11 +31,13 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+
     public void registerUser(SignDto requestDto, BindingResult bindingResult) {
+
         // 회원 ID 중복 확인
         String username = requestDto.getUsername();
-
-
+        String email = requestDto.getEmail(); //이메일 받기**/
        Optional<User> found = userRepository.findByUsername(username);
         if (found.isPresent()) {
             FieldError fieldError = new FieldError("requestDto","username","이미 있습니다.");
@@ -46,17 +48,17 @@ public class UserService {
 // 패스워드 암호화
         String password = passwordEncoder.encode(requestDto.getPassword()); //비밀번호
         String passwordCheck = passwordEncoder.encode(requestDto.getPasswordCheck()); //비밀번호 확인
-        String email = requestDto.getEmail(); //이메일 받기**/
+
 
         //패스워드와 패스워드 확인 같은지 확인
-       if(!Objects.equals(requestDto.getPassword(), requestDto.getPasswordCheck())){ //비밀번호 비밀번호 확인
-            FieldError fieldError = new FieldError("requestDto","password","비밀번호와 비밀번호 확인이 다릅니다.");
+       if(!requestDto.getPassword().equals((requestDto.getPasswordCheck()))){ //비밀번호 비밀번호 확인
+            FieldError fieldError = new FieldError("requestDto","passwordCheck","비밀번호와 비밀번호 확인이 다릅니다.");
             bindingResult.addError(fieldError);
         }
 
 
-        if(Objects.equals(requestDto.getUsername(), requestDto.getPassword())){ //닉네임 비밀번호 확인
-            FieldError fieldError = new FieldError("requestDto","passwordCheck","닉네임와 비밀번호가 같으면 안됩니다");
+        if(requestDto.getUsername().equals(requestDto.getPassword())){ //닉네임 비밀번호 확인
+            FieldError fieldError = new FieldError("requestDto","password","닉네임와 비밀번호가 같으면 안됩니다");
             bindingResult.addError(fieldError);
         }
 
