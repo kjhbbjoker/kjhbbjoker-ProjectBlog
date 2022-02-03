@@ -2,15 +2,15 @@ package com.example.projectblog.controller;
 
 import com.example.projectblog.dto.SignDto;
 import com.example.projectblog.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -30,6 +30,12 @@ public class UserController {
     public String login() {
 
         return "login";
+    }
+
+    @GetMapping("/user/kakao/callback")
+    public String kakaoLogin(@RequestParam String code) throws JsonProcessingException {
+        userService.kakaoLogin(code);
+        return "redirect:/";
     }
 
 
@@ -56,5 +62,11 @@ public class UserController {
 
 
 
+
+
+
+
+
     }
+
 }

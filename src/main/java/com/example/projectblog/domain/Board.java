@@ -1,12 +1,16 @@
-package com.example.projectblog.model;
+package com.example.projectblog.domain;
 
 import com.example.projectblog.dto.BoardDto;
+
+import com.example.projectblog.model.Comments;
+import com.example.projectblog.model.User;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @EntityListeners(AuditingEntityListener.class)
 @Entity //JPA를 사용하여 데이터와 매핑하겠다는 의미
@@ -20,7 +24,7 @@ public class Board extends  Timestamped{
     @Id//테이블의 주키(primary key) 역할을 한다는 것을 나타낸다.
     @GeneratedValue(strategy =  GenerationType.IDENTITY) //@GeneratedValue는 주키의 값을 위한 자동 생성 전략을 명시
     @Column(name ="board_id" )
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false, columnDefinition = "varchar(20)")
     private  String title;
@@ -31,11 +35,18 @@ public class Board extends  Timestamped{
     @Column(nullable = false, columnDefinition = "varchar(100)" )
     private  String content;
 
+    @JoinColumn(name = "user")
+    @ManyToOne
+    private User user;
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<Comments> commentsList;
+
 
 
 
     @Builder //빌더 패턴
-    public Board(Integer id , String title, String username, String content, LocalDateTime modifiedAt){
+    public Board(Long id ,String title, String username, String content, LocalDateTime modifiedAt, LocalDateTime createdAt){
         this.title = title;
         this.username = username;
         this.content = content;

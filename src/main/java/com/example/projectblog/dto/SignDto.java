@@ -20,6 +20,8 @@ import javax.validation.constraints.Pattern;
 
 public class SignDto {
 
+    private Long id;
+
     @NotBlank(message = "아이디를 입력해주세요")
     @Pattern(regexp = "^[a-zA-Z0-9]{3,15}$", message = "아이디를 3~15자로 입력해주세요. (특수문자는 x)")
     private String username;
@@ -35,6 +37,10 @@ public class SignDto {
     @NotBlank(message = "이메일을 입력해주세요")
     @Email
     private String email;
+
+
+    private boolean admin = false;
+    private String adminToken = "";
 
 
 

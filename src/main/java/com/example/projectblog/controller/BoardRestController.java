@@ -27,13 +27,14 @@ public class BoardRestController {
 
 
     @GetMapping("/api/board/{id}") //하나의 글 조회
-    public  BoardDto getOne(@PathVariable Integer id){
+    public  BoardDto getOne(@PathVariable Long id){
         return boardservice.getOne(id);
     }
 
 
     @PostMapping("/api/board") //글 작성
     public BoardDto create(@RequestBody BoardDto createBoard) {
+
         return boardservice.create(createBoard);
     }
 

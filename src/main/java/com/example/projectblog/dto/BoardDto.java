@@ -2,7 +2,7 @@ package com.example.projectblog.dto;
 
 
 
-import com.example.projectblog.model.Board;
+import com.example.projectblog.domain.Board;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor//모든 필드 값을 파라미터로 받는 생성자를 만듬 즉 클래스에 존재하는 모든 필드에 대한 생성자를 자동으로 생성해줍니다.
 public class BoardDto {
 
-    private Integer id;
+    private Long id;
     private String title;
     private String username;
     private String content;
@@ -30,6 +30,7 @@ public class BoardDto {
                 .title(this.title)
                 .username(this.username)
                 .content(this.content)
+                .createdAt(this.createdAt)
                 .build();
     }
 

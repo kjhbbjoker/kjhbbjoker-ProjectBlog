@@ -3,7 +3,7 @@ package com.example.projectblog.service;
 
 
 import com.example.projectblog.dto.BoardDto;
-import com.example.projectblog.model.Board;
+import com.example.projectblog.domain.Board;
 import com.example.projectblog.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class BoardService {
     }
 
 
-    public  BoardDto getOne(Integer board_id){ //하나의 글만 조회
+    public  BoardDto getOne(Long board_id){ //하나의 글만 조회
         return boardrepository.findById(board_id).get().toDto();//id로 해당 내용을 가져오는데 이것을 dto변환한다.
     }
 
@@ -39,9 +39,8 @@ public class BoardService {
         //DTO에서 엔티티로 만들어주려고 만든 toentity에 작성글을
         Board createBoard = dto.toEntity();
 
-        return  boardrepository.save(createBoard).toDto(); //그리고 그것을 toDto에 저장한다
+        return boardrepository.save(createBoard).toDto(); //그리고 그것을 toDto에 저장한다
     }
-
 
 
 
